@@ -25,6 +25,7 @@ import static android.media.AudioManager.STREAM_ALARM;
 import static android.media.AudioManager.STREAM_MUSIC;
 import static android.media.AudioManager.STREAM_RING;
 import static android.media.AudioManager.STREAM_VOICE_CALL;
+import static android.provider.Settings.System.VOLUME_PANEL_ON_LEFT;
 import static android.view.View.ACCESSIBILITY_LIVE_REGION_POLITE;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
@@ -53,6 +54,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.database.ContentObserver;
 import android.graphics.Outline;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -70,6 +72,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.provider.Settings;
+import android.os.UserHandle;
 import android.provider.Settings.Global;
 import android.text.InputFilter;
 import android.util.Log;
@@ -265,6 +268,38 @@ public class VolumeDialogImpl implements VolumeDialog,
     // Variable to track the default row with which the panel is initially shown
     private VolumeRow mDefaultRow = null;
 
+    private final SettingsObserver mSettingsObserver = new SettingsObserver();
+    private class SettingsObserver extends ContentObserver {
+        SettingsObserver() {
+            super(mHandler);
+        }
+
+        void observe() {
+            mContext.getContentResolver().registerContentObserver(
+                    Settings.System.getUriFor(VOLUME_PANEL_ON_LEFT),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        void stop() {
+            mContext.getContentResolver().unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        void update() {
+            final boolean def = mContext.getResources().getBoolean(
+                    R.bool.config_audioPanelOnLeftSide);
+            mVolumePanelOnLeft = Settings.System.getInt(mContext.getContentResolver(),
+                    VOLUME_PANEL_ON_LEFT, def ? 1 : 0) == 1;
+            mHandler.post(() -> {
+                mControllerCallbackH.onConfigurationChanged();
+            });
+        }
+    }
+
     private FrameLayout mRoundedBorderBottom;
 
     public VolumeDialogImpl(
@@ -312,7 +347,8 @@ public class VolumeDialogImpl implements VolumeDialog,
         }
 
         if (!mShowActiveStreamOnly) {
-            mVolumePanelOnLeft = mContext.getResources().getBoolean(R.bool.config_audioPanelOnLeftSide);;
+            mSettingsObserver.observe();
+            mSettingsObserver.update();
         }
 
         initDimens();
@@ -339,6 +375,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         mController.removeCallback(mControllerCallbackH);
         mHandler.removeCallbacksAndMessages(null);
         mConfigurationController.removeCallback(this);
+        if (!mShowActiveStreamOnly) mSettingsObserver.stop();
     }
 
     @Override
@@ -380,8 +417,8 @@ public class VolumeDialogImpl implements VolumeDialog,
         if (view == mTopContainer && !mIsRingerDrawerOpen) {
             if (!isLandscape()) {
                 yExtraSize = getRingerDrawerOpenExtraSize();
-            } else if (getRingerDrawerOpenExtraSize() > getVisibleRowsExtraSize()) {
-                xExtraSize = (getRingerDrawerOpenExtraSize() - getVisibleRowsExtraSize());
+            } else {
+                xExtraSize = getRingerDrawerOpenExtraSize();
             }
         }
 
@@ -574,6 +611,37 @@ public class VolumeDialogImpl implements VolumeDialog,
 
         mSettingsView = mDialog.findViewById(R.id.settings_container);
         mSettingsIcon = mDialog.findViewById(R.id.settings);
+
+        if (mVolumePanelOnLeft) {
+            if (mRingerAndDrawerContainer != null) {
+                mRingerAndDrawerContainer.setLayoutDirection(LAYOUT_DIRECTION_RTL);
+            }
+
+            ViewGroup container = mDialog.findViewById(R.id.volume_dialog_container);
+            setGravity(container, Gravity.LEFT);
+            setLayoutGravity(container, Gravity.LEFT);
+
+            setGravity(mDialogView, Gravity.LEFT);
+            setLayoutGravity(mDialogView, Gravity.LEFT);
+
+            setGravity((ViewGroup) mTopContainer, Gravity.LEFT);
+
+            setLayoutGravity(mSelectedRingerContainer, Gravity.BOTTOM | Gravity.LEFT);
+
+            setLayoutGravity(mRingerDrawerNewSelectionBg, Gravity.BOTTOM | Gravity.LEFT);
+
+            setGravity(mRinger, Gravity.LEFT);
+            setLayoutGravity(mRinger, Gravity.BOTTOM | Gravity.LEFT);
+
+            setGravity(mDialogRowsViewContainer, Gravity.LEFT);
+            setLayoutGravity(mDialogRowsViewContainer, Gravity.LEFT);
+
+            setGravity(mODICaptionsView, Gravity.LEFT);
+            setLayoutGravity(mODICaptionsView, Gravity.LEFT);
+
+            //((ViewStub.LayoutParams) mODICaptionsTooltipViewStub.getLayoutParams())
+            //        .gravity = Gravity.BOTTOM | Gravity.LEFT;
+        }
 
         mRoundedBorderBottom = mDialog.findViewById(R.id.rounded_border_bottom);
 
