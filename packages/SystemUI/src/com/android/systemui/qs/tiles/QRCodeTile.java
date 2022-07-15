@@ -62,7 +62,7 @@ public class QRCodeTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.PIXYS;
+        return MetricsEvent.ALTHO;
     }
 
     @Override

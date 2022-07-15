@@ -93,9 +93,6 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<AlarmTile> mAlarmTileProvider;
     private final Provider<QuickAccessWalletTile> mQuickAccessWalletTileProvider;
     private final Provider<PowerShareTile> mPowerShareTileProvider;
-    private final Provider<CaffeineTile> mCaffeineTileProvider;
-    private final Provider<HeadsUpTile> mHeadsUpTileProvider;
-    private final Provider<AODTile> mAODTileProvider;
     private final Provider<QRCodeTile> mQRCodeTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
@@ -132,10 +129,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<DeviceControlsTile> deviceControlsTileProvider,
             Provider<AlarmTile> alarmTileProvider,
             Provider<QuickAccessWalletTile> quickAccessWalletTileProvider,
-            Provider<PowerShareTile> powerShareTileProvider) {
-            Provider<CaffeineTile> caffeineTileProvider,
-            Provider<HeadsUpTile> headsUpTileProvider,
-            Provider<AODTile> aodTileProvider,
+            Provider<PowerShareTile> powerShareTileProvider,
             Provider<QRCodeTile> qrCodeTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
@@ -168,9 +162,6 @@ public class QSFactoryImpl implements QSFactory {
         mAlarmTileProvider = alarmTileProvider;
         mQuickAccessWalletTileProvider = quickAccessWalletTileProvider;
         mPowerShareTileProvider = powerShareTileProvider;
-        mCaffeineTileProvider = caffeineTileProvider;
-        mHeadsUpTileProvider = headsUpTileProvider;
-        mAODTileProvider = aodTileProvider;
         mQRCodeTileProvider = qrCodeTileProvider;
     }
 
@@ -241,12 +232,6 @@ public class QSFactoryImpl implements QSFactory {
             // Additional tiles.
             case "powershare":
                 return mPowerShareTileProvider.get();
-            case "caffeine":
-                return mCaffeineTileProvider.get();
-            case "heads_up":
-                return mHeadsUpTileProvider.get();
-            case "aod":
-                return mAODTileProvider.get();
             case "qr_code":
                 return mQRCodeTileProvider.get();
         }

@@ -96,9 +96,6 @@ public class QSFactoryImplGoogle extends QSFactoryImpl {
             Provider<AlarmTile> alarmTileProvider,
             Provider<QuickAccessWalletTile> quickAccessWalletTileProvider,
             Provider<PowerShareTile> powerShareTileProvider
-            Provider<CaffeineTile> caffeineTileProvider,
-            Provider<HeadsUpTile> headsUpTileProvider,
-            Provider<AODTile> aodTileProvider,
             Provider<QRCodeTile> qrCodeTileProvider,
             Provider<ReverseChargingTile> reverseChargingTileProvider) {
         super(qsHostLazy,
@@ -131,9 +128,6 @@ public class QSFactoryImplGoogle extends QSFactoryImpl {
                 alarmTileProvider,
                 quickAccessWalletTileProvider,
                 powerShareTileProvider,
-                caffeineTileProvider,
-                headsUpTileProvider,
-                aodTileProvider,
                 qrCodeTileProvider);
 
         mReverseChargingTileProvider = reverseChargingTileProvider;
