@@ -681,7 +681,6 @@ public class StatusBar extends SystemUI implements
     protected final BatteryController mBatteryController;
     private IOverlayManager mOverlayManager;
     protected boolean mPanelExpanded;
-    private IOverlayManager mOverlayManager;
     private UiModeManager mUiModeManager;
     protected boolean mIsKeyguard;
     private LogMaker mStatusBarStateLog;
