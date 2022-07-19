@@ -5511,6 +5511,12 @@ public final class Settings {
         public static final String VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
 
         /**
+         * Whether to show battery estimates in QS
+         * @hide
+         */
+        public static final String QS_SHOW_BATTERY_ESTIMATE = "qs_show_battery_estimate";
+
+        /**
          * Whether to show media album art on keyguard
          * @hide
          */
