@@ -52,7 +52,7 @@ import static android.os.Process.THREAD_PRIORITY_TOP_APP_BOOST;
 import static android.os.Process.setProcessGroup;
 import static android.os.Process.setThreadPriority;
 import static android.os.Process.setThreadScheduler;
-import static android.provider.Settings.Global.FORCE_BACKGROUND_FREEZER;
+mport static android.provider.Settings.Global.FORCE_BACKGROUND_FREEZER;
 
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_ALL;
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_BACKUP;
