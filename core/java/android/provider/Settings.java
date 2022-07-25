@@ -5459,10 +5459,6 @@ public final class Settings {
          */
         public static final String VOLTE_ICON_STYLE = "volte_icon_style";
 
-        /**
-         * @hide
-         */
-        public static final String QS_TRANSPARENCY = "qs_transparency";
 
         /**
          * Network traffic indicator location
