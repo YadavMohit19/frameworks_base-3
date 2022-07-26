@@ -20,7 +20,7 @@
         android:color="?android:attr/colorControlHighlight">
     <item>
         <shape>
-            <solid android:color="?androidprv:attr/colorSurface" />
+            <solid android:color="packages/SystemUI/res/drawable/notification_material_bg.xml" />
         </shape>
     </item>
 </ripple>
