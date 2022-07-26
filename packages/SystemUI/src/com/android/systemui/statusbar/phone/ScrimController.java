@@ -705,7 +705,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
             if (mClipsQsScrim) {
                 mNotificationsAlpha = behindAlpha;
                 mNotificationsTint = behindTint;
-                mBehindAlpha = QS_1;
+                mBehindAlpha = 1;
                 mBehindTint = Color.BLACK;
             } else {
                 mBehindAlpha = behindAlpha;
