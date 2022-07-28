@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
 
    <!-- Whether device has physical tri state switch -->
@@ -5,4 +7,7 @@
 
     <!-- The location of the devices physical tri state switch -->
     <java-symbol type="integer" name="config_alertSliderLocation" />
+    
+    <!-- Whether to disable Night Light on Udfps keyguard -->
+    <bool name="config_udfpsDisableNightLight">false</bool>
 </resources>
