@@ -18,6 +18,8 @@ package com.android.systemui.biometrics;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.RectF;
 
 import androidx.annotation.NonNull;
 
@@ -35,7 +37,33 @@ public class UdfpsFpDrawable extends UdfpsDrawable {
         if (isIlluminationShowing()) {
             return;
         }
+        
+        if (getUdfpsDrawable() != null) {
+            getUdfpsDrawable().draw(canvas);
+            return;
+        }
 
         mFingerprintDrawable.draw(canvas);
+    }
+    
+    @Override
+    public void onSensorRectUpdated(@NonNull RectF sensorRect) {
+        super.onSensorRectUpdated(sensorRect);
+        final int margin =  (int) sensorRect.height() / 16;
+
+        final Rect bounds = new Rect((int) sensorRect.left + margin,
+                (int) sensorRect.top + margin,
+                (int) sensorRect.right - margin,
+                (int) sensorRect.bottom - margin);
+        updateFingerprintIconBounds(bounds);
+    }
+
+    @Override
+    protected void updateFingerprintIconBounds(@NonNull Rect bounds) {
+        super.updateFingerprintIconBounds(bounds);
+        if (getUdfpsDrawable() != null) {
+            getUdfpsDrawable().setBounds(bounds);
+            invalidateSelf();
+        }
     }
 }

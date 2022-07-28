@@ -5516,6 +5516,21 @@ public final class Settings {
          */
         @Readable
         public static final String KEYGAURD_MEDIA_ART = "keygaurd_media_art";
+        
+        /**
+         * @hide
+         */
+        public static final String UDFPS_ANIM = "udfps_anim";
+
+        /**
+         * @hide
+         */
+        public static final String UDFPS_ANIM_STYLE = "udfps_anim_style";
+
+        /**
+         * @hide
+         */
+        public static final String UDFPS_ICON = "udfps_icon";
 
         /**
          * These are all public system settings
