@@ -26,6 +26,15 @@ import android.hardware.camera2.CameraManager;
 
 public class CustomUtils {
 
+     public static boolean isAppInstalled(Context context, String appUri) {
+        try {
+            PackageManager pm = context.getPackageManager();
+            pm.getPackageInfo(appUri, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     public static boolean isAvailableApp(String packageName, Context context) {
        Context mContext = context;
