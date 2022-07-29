@@ -858,12 +858,12 @@ public class UdfpsController implements DozeReceiver {
         mExecution.assertIsMainThread();
 
         final int reason = request.mRequestReason;
-        
+
         if (mUdfpsAnimation != null) {
             mUdfpsAnimation.setIsKeyguard(reason ==
-                    IUdfpsOverlayController.REASON_AUTH_FPM_KEYGUARD);
+                    BiometricOverlayConstants.REASON_AUTH_KEYGUARD);
         }
-        
+
         if (mView == null) {
             try {
                 Log.v(TAG, "showUdfpsOverlay | adding window reason=" + reason);
