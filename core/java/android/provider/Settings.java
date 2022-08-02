@@ -5420,6 +5420,12 @@ public final class Settings {
         };
 
         /**
+         * @hide
+         */
+        public static final String QS_TRANSPARENCY = "qs_transparency";
+
+
+        /**
          * Swipe to screenshot
          * @hide
          */
